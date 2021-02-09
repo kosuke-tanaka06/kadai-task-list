@@ -27,7 +27,7 @@ class CreateTaskController @Inject()(components: ControllerComponents)
         formWithErrors => BadRequest(views.html.create(formWithErrors)), { model =>
           implicit val session = AutoSession
           val now              = ZonedDateTime.now()
-          val task          = Task(None, model.body, now, now)
+          val task          = Task(None,Some(model.status),model.body, now, now)
           val result           = Task.create(task)
           if (result > 0) {
             Redirect(routes.GetTasksController.index())
